@@ -1,1 +1,5 @@
-# BlazorServer
+# Blazor
+
+## Server
+
+## WebAssembly
