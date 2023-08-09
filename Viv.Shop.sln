@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServer", "BlazorServer\BlazorServer.csproj", "{FBD1C4F0-14FC-43D2-B80C-B85B6B41E1FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viv.Web", "Viv.Web\Viv.Web.csproj", "{480AF9BF-157B-4C63-BEC6-5800DD459545}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viv.Web", "Viv.Web\Viv.Web.csproj", "{480AF9BF-157B-4C63-BEC6-5800DD459545}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viv.Api", "Viv.Api\Viv.Api.csproj", "{6854667E-9522-4E9E-B48A-B0C8047BC893}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viv.Api", "Viv.Api\Viv.Api.csproj", "{6854667E-9522-4E9E-B48A-B0C8047BC893}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +15,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FBD1C4F0-14FC-43D2-B80C-B85B6B41E1FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBD1C4F0-14FC-43D2-B80C-B85B6B41E1FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBD1C4F0-14FC-43D2-B80C-B85B6B41E1FD}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{FBD1C4F0-14FC-43D2-B80C-B85B6B41E1FD}.Debug|x64.Build.0 = Debug|Any CPU
-		{FBD1C4F0-14FC-43D2-B80C-B85B6B41E1FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBD1C4F0-14FC-43D2-B80C-B85B6B41E1FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBD1C4F0-14FC-43D2-B80C-B85B6B41E1FD}.Release|x64.ActiveCfg = Release|Any CPU
-		{FBD1C4F0-14FC-43D2-B80C-B85B6B41E1FD}.Release|x64.Build.0 = Release|Any CPU
 		{480AF9BF-157B-4C63-BEC6-5800DD459545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{480AF9BF-157B-4C63-BEC6-5800DD459545}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{480AF9BF-157B-4C63-BEC6-5800DD459545}.Debug|x64.ActiveCfg = Debug|Any CPU
