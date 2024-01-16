@@ -10,7 +10,7 @@
 
     # Create New
     $ dotnet new blazor -o Buddham -int Auto --no-https false --empty false
-    $ dotnet new blazor -o TextBlazorApp -au Individual -int Auto --no-https false
+    $ dotnet new blazor -o Kr.Or.Writer.WebApp -n WriterWebApp -f net8.0 -au Individual -int Auto --no-https false -uld true
 
     # dotnet ef
     $ dotnet tool install --global dotnet-ef
