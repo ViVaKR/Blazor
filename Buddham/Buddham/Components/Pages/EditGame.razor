@@ -3,7 +3,7 @@
 
 <h3>Create Gme</h3>
 
-<EditForm Model="game" OnSubmit="HandleSubmit">
+<EditForm Model="game">
     <label>Name</label>
     <InputText @bind-Name="game.Name">@game.Name</InputText>
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -11,9 +11,4 @@
 
 @code {
     Game game = new Game { Name = string.Empty };
-
-    async Task HandleSubmit()
-    {
-        // 
-    }
 }

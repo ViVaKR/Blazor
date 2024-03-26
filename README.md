@@ -43,5 +43,5 @@
 // exmaple 1
 "DefaultConnection":"Servre=.\\SQLEXPRESS;Database=DbName;Trusted_connection=True;TrustServerCertificate=True;"
 // example 2
-"DefaultConnection": "server=locahost:1234;database=DbName;user id=UserName; password=비밀번호;TrustServerCertificate=True;"
+"DefaultConnection": "server=locahost,1234;database=DbName;user id=UserName; password=비밀번호;TrustServerCertificate=True;"
 ```
