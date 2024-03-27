@@ -1,11 +1,13 @@
 ﻿@page "/games"
 @inject IGameService GameService
+@attribute [StreamRendering(true)]
 
 <h3>GameList</h3>
 
 @if (games == null)
 {
-    <span>Load...</span>
+    <p>Load...</p>
+    <br />
 }
 else if (!games.Any())
 {
@@ -19,12 +21,13 @@ else
             <li>@game.Id - @game.Name</li>
         }
     </ul>
-
 }
+
+<CreateGameButton />
 
 @code {
 
-    List<Game>? games;
+    List<Game>? games = null;
 
     protected override async Task OnInitializedAsync()
     {

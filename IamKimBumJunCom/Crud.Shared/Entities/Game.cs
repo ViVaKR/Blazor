@@ -1,4 +1,4 @@
-﻿namespace IamKimBumJunCom.Entities;
+﻿namespace Crud.Shared.Entities;
 
 public class Game
 {

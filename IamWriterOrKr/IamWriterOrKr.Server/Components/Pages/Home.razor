@@ -1,0 +1,40 @@
+﻿@page "/"
+@inject NavigationManager nav
+@inject MessageState messageState
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<h3>This is the Output: @messageState.Message</h3>
+<br>
+<input type="text" class="form-control" @bind-value="messageState.Message" />
+<br />
+<button class="btn btn-outline-danger">Click</button>
+
+<input type="text" name="hi" id="hi" class="form-control py-3 my-3 shadow-2xl"
+       @bind-value="messageState.Message" />
+<br />
+<div class="text-pink-500  rounded-3xl shadow p-3 text-5xl text-center">Hi Everyone</div>
+<br />
+
+<Greetings />
+<br>
+
+<div class="text-yellow-500 clear-both bg-blue-100 rounded-full text-center my-3">Hi</div>
+<button @onclick="GoToWeather" class="btn btn-primary">
+    Go To Weather Page
+</button>
+<button type="button" class="btn btn-outline-info" @onclick="SetMessage">Set message</button>
+<button type="button" class="btn btn-outline-danger" @onclick="messageState.ClearMessage">Clear</button>
+
+@code {
+    void GoToWeather()
+    {
+        nav.NavigateTo("counter");
+    }
+
+    void SetMessage()
+    {
+        messageState.SetMessage($"{DateTime.Now}");
+    }
+}

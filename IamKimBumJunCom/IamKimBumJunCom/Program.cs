@@ -1,7 +1,8 @@
 using IamKimBumJunCom.Components;
-using IamKimBumJunCom.Data;
-using IamKimBumJunCom.Services;
 using Microsoft.EntityFrameworkCore;
+using Crud.Shared.Data;
+using Crud.Shared.Services;
+using Crud.Shared.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 

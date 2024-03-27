@@ -1,0 +1,27 @@
+﻿@page "/edit-game"
+@page "/edit-game/{id:int}"
+@using Crud.Shared.Services
+@using Crud.Shared.Data
+@using Crud.Shared.Entities
+@inject IGameService GameService
+@rendermode InteractiveServer
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    [SupplyParameterFromForm]
+    Game game { get; set; } = new Game { Name = string.Empty };
+
+    async Task HandleSubmit()
+    {
+        await GameService.AddGame(game);
+    }
+}
+
+<h3>Create Game</h3>
+<EditForm Model="game" OnSubmit="HandleSubmit">
+    <label>Name</label>
+    <InputText @bind-Value="game.Name">@game.Name</InputText>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>

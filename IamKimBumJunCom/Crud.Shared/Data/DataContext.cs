@@ -1,7 +1,7 @@
-﻿using IamKimBumJunCom.Entities;
+﻿using Crud.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace IamKimBumJunCom.Data;
+namespace Crud.Shared.Data;
 
 public class DataContext(DbContextOptions options) : DbContext(options)
 {

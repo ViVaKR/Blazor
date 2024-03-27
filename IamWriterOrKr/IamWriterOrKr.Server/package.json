@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "autoprefixer": "^10.4.19",
+    "bootstrap": "^5.3.3",
+    "flowbite": "^2.3.0",
+    "postcss": "^8.4.38",
+    "postcss-cli": "^11.0.0"
+  },
+  "name": "iamwriterorkr.server",
+  "version": "1.0.0",
+  "main": "tailwind.config.js",
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
