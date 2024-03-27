@@ -10,5 +10,9 @@ public class MessageState
     public void ClearMessage()
     {
         Message = string.Empty;
+        if (1 == 1)
+        {
+            // blar blar
+        }
     }
 }
