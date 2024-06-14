@@ -14,6 +14,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+Console.WriteLine("Hi");
 
 app.UseStaticFiles();
 app.UseAntiforgery();
