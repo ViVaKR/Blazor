@@ -18,6 +18,7 @@ builder.Services.AddRazorComponents().AddInteractiveServerComponents().AddIntera
 
 builder.Services.AddControllers();
 builder.Services.AddScoped(http => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetSection("BasUri").Value!) });
+
 // Add services to the container.
 if (builder.Environment.IsDevelopment())
 {
@@ -140,7 +141,7 @@ app.MapGet("/apikey", () => connection);
 
 
 --> [ 배포: MacOS ]
-$ dotnet publish -c Release -o /Users/vivakr/WebServer/kr.co.kimbumjun/api --self-contained -r osx-x64
+$ dotnet publish -c Release -o /Users/vivakr/WebServer/kr.co.kimbumjun/iam --self-contained -r osx-x64
 
 
  */
