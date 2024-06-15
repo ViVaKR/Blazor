@@ -5,7 +5,6 @@
 @using Crud.Shared.Entities
 @inject IGameService GameService
 @rendermode InteractiveServer
-
 @code {
     [Parameter]
     public int? Id { get; set; }
@@ -13,15 +12,59 @@
     [SupplyParameterFromForm]
     Game game { get; set; } = new Game { Name = string.Empty };
 
-    async Task HandleSubmit()
+    protected override async Task OnParametersSetAsync()
     {
+        if (Id != null)
+        {
+            game = await GameService.GetGameById(Id.Value);
+        }
+    }
+    public async Task HandleSubmit()
+    {
+        if (Id != null)
+        {
+            await GameService.UpdateGame((int)Id, game);
+            return;
+        }
         await GameService.AddGame(game);
+    }
+
+    public async Task DeleteGame(int id)
+    {
+        if (Id != null)
+            await GameService.DeleteGame(id);
     }
 }
 
-<h3>Create Game</h3>
+@if (Id == null)
+{
+    <h3>Create Game</h3>
+}
+else
+{
+    <h3>Edit @game.Name</h3>
+}
+
 <EditForm Model="game" OnSubmit="HandleSubmit">
-    <label>Name</label>
-    <InputText @bind-Value="game.Name">@game.Name</InputText>
-    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="gamename">Name</label>
+        <InputText @bind-Value="game.Name"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-light focus:outline-1"
+                   id="gamename">
+            @game.Name
+        </InputText>
+
+    </div>
+    <div class="flex items-center justify-center pb-2">
+        <button type="submit"
+                class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">저장</button>
+        @if (Id != null)
+        {
+            <button type="button"
+                    class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    @onclick="() => DeleteGame(Id.Value)">삭제</button>
+        }
+
+    </div>
 </EditForm>

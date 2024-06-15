@@ -1,0 +1,56 @@
+﻿@page "/edit-utility"
+@page "/edit-utility/{id:int}"
+
+@using Crud.Shared.Services
+@using Crud.Shared.Data
+@using Crud.Shared.Entities
+@inject IUtilityService UtilityService
+@rendermode InteractiveServer
+
+@code {
+  [Parameter]
+  public int? Id { get; set; }
+
+  [SupplyParameterFromForm]
+  Utility utility { get; set; } = new Utility
+    {
+      Title = string.Empty,
+      Category = string.Empty,
+      Description = string.Empty
+    };
+
+  async Task HandleSubmit()
+  {
+    await UtilityService.AddUtility(utility);
+  }
+}
+
+<h1 class="my-2 text-2xl font-bold antialiased">Create Utility</h1>
+
+<EditForm Model="utility" OnSubmit="HandleSubmit" class="bg-white shadow-md rounded px-8 pt-6 mb-4">
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title</label>
+    <InputText @bind-Value="utility.Title" id="title"
+               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      @utility.Title</InputText>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="category">Category</label>
+    <InputText @bind-Value="utility.Category" id="category"
+               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      @utility.Category</InputText>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Description</label>
+    <InputText @bind-Value="utility.Description" id="description"
+               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      @utility.Description</InputText>
+  </div>
+
+  <div class="flex items-center justify-center pb-2">
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Submit</button>
+  </div>
+
+</EditForm>

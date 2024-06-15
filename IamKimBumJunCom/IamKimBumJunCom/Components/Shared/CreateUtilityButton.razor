@@ -1,0 +1,17 @@
+﻿@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<div>
+    <button @onclick="GoToCreateUtility"
+            class="bg-blue-500 text-white hover:bg-blue-700 font-bold px-4 py-2 rounded">Create
+        Utility</button>
+</div>
+<h3>CreateUtilityButton</h3>
+
+@code {
+    public void GoToCreateUtility()
+    {
+        NavigationManager.NavigateTo("/edit-utility");
+    }
+
+}

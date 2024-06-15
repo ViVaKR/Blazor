@@ -6,23 +6,26 @@
 
 @if (games == null)
 {
-    <p>Load...</p>
+    <p>Data Loading...</p>
     <br />
 }
 else if (!games.Any())
 {
-    <span>No games found</span>
+    <span>No Games Found</span>
 }
 else
 {
     <ul>
     @foreach (var game in games)
         {
-            <li>@game.Id - @game.Name</li>
+
+            <li class="flex">@game.Id - @game.Name
+                <EditGameButton Id="game.Id" />
+            </li>
         }
     </ul>
 }
-
+<br />
 <CreateGameButton />
 
 @code {

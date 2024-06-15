@@ -16,9 +16,22 @@ var connection = conStrBuilder.ConnectionString;
 // Add services to the container.
 builder.Services.AddRazorComponents().AddInteractiveServerComponents().AddInteractiveWebAssemblyComponents();
 
-//--> DI (종속성 주입 파트)
-builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(connection));
+builder.Services.AddControllers();
+builder.Services.AddScoped(http => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetSection("BasUri").Value!) });
+// Add services to the container.
+if (builder.Environment.IsDevelopment())
+{
+    //--> 개발시 환경
+    builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(connection, b => b.MigrationsAssembly("IamKimBumJunCom")));
+}
+else
+{
+    //--> 배포시 환경 (appsettings.json 파일에 비밀 추가 필요)
+    builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("IamKimBumJunCom")));
+}
 
+// 종속성 주입
+builder.Services.AddScoped<IUtilityService, UtilityService>();
 builder.Services.AddScoped<IGameService, GameService>();
 
 var app = builder.Build();
@@ -36,6 +49,8 @@ else
 
 app.UseHttpsRedirection();
 
+app.MapControllers();
+
 app.UseStaticFiles();
 app.UseAntiforgery();
 
@@ -48,7 +63,10 @@ app.Run();
 
 
 /*
---> 비밀 관리자 도구
+--> [ Start ]
+
+
+--> [ secrets 비밀 관리자 도구 ]
 # 파일 시스템 경로
 Linux / macOS : ~/.microsoft/usersecrets/{userSecretsId}/secrets.json
 Windows : %APPDATA%\Microsoft\UserSecrets\{userSecretsId}\secrets.json
@@ -90,7 +108,7 @@ $ dotnet user-secrets remove "Movies:ConnectionString"
 # 모든 비밀 제거
 $ dotnet user-secrets clear
 
-(
+
 
 # [ ASP.NET Core 프로젝트에서 비밀 사용 ]
 # 패키지 설치 (.NET CLI)
@@ -99,6 +117,11 @@ $ dotnet add package Microsoft.Extensions.Configuration.UserSecrets
 # 패키지 설치 (NuGet 패키지 관리자)
 $ Install-Package Microsoft.Extensions.Configuration
 $ Install-Package Microsoft.Extensions.Configuration.UserSecrets
+
+$ donte tool install --global dotnet-outdated-tool
+$ dotnet outdated -u
+
+--> Change your migrations assembly by using DbContextOptionsBuilder. E.g. options.UseSqlServer(connection, b => b.MigrationsAssembly("IamKimBumJunCom")). By default, the migrations assembly is the assembly containing the DbContext.
 
 # [ API 를 통해 비밀 읽기 ]
 var builder = WebApplication.CreateBuilder(args);
@@ -114,4 +137,10 @@ string? sec = config["IamKimBumJunCom:ConnectionString"] ?? connection;
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var apiKey = builder.Configuration["IamKimBumJunCom:ServiceApiKey"];
 app.MapGet("/apikey", () => connection);
+
+
+--> [ 배포: MacOS ]
+$ dotnet publish -c Release -o /Users/vivakr/WebServer/kr.co.kimbumjun/api --self-contained -r osx-x64
+
+
  */

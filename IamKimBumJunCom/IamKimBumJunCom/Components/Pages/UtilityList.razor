@@ -1,0 +1,49 @@
+﻿@page "/utility-list"
+@inject IUtilityService UtilityService
+@attribute [StreamRendering(true)]
+
+<h3 class="py-3">UtilityList</h3>
+
+@if (list == null)
+{
+  <p>Data Loading...</p>
+  <br />
+}
+else if (!list.Any())
+{
+  <span>No Utilities found</span>
+}
+else
+{
+  <table class="hover:table-fixed">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var utility in list)
+      {
+        <tr>
+          <td>@utility.Id</td>
+          <td>@utility.Title</td>
+          <td>@utility.Category</td>
+          <td>@utility.Description</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
+<br />
+<CreateUtilityButton />
+@code {
+  List<Utility>? list = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    list = await UtilityService.GetAllUtilities();
+  }
+}
