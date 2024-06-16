@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTicTacToe", "BlazorTi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTicTacToe.Client", "BlazorTicTacToe.Client\BlazorTicTacToe.Client.csproj", "{762E67AE-EF96-4C80-A624-34313E58B2A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorTicTacToe.Shared", "BlazorTicTacToe.Shared\BlazorTicTacToe.Shared.csproj", "{88C6B6F4-0535-4525-8863-E18395208AA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{762E67AE-EF96-4C80-A624-34313E58B2A6}.Release|ARM64.Build.0 = Release|ARM64
 		{762E67AE-EF96-4C80-A624-34313E58B2A6}.Release|x64.ActiveCfg = Release|x64
 		{762E67AE-EF96-4C80-A624-34313E58B2A6}.Release|x64.Build.0 = Release|x64
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Debug|x64.Build.0 = Debug|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Release|ARM64.Build.0 = Release|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Release|x64.ActiveCfg = Release|Any CPU
+		{88C6B6F4-0535-4525-8863-E18395208AA5}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

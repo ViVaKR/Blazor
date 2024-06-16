@@ -14,4 +14,12 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorTicTacToe.Shared\BlazorTicTacToe.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot/css/" />
+  </ItemGroup>
+
 </Project>

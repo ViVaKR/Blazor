@@ -18,4 +18,8 @@
     <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorTicTacToe.Shared\BlazorTicTacToe.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

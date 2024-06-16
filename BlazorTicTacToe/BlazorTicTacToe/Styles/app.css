@@ -1,0 +1,23 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h3.client-title {
+  @apply font-extrabold mx-2 text-3xl text-sky-400;
+}
+
+button.client-ok-button {
+  @apply bg-indigo-400 mx-2 text-white font-bold py-2 px-4 rounded;
+}
+
+button.client-ok-button:hover {
+  @apply bg-indigo-500;
+}
+
+input.client-input {
+  @apply border-4 flex px-5 py-2 m-2 w-full text-gray-500 border-indigo-300 rounded-tr-2xl rounded-bl-2xl;
+}
+
+input.client-input:focus {
+  @apply border-gray-400;
+}
