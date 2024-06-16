@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTicTacToe", "BlazorTicTacToe\BlazorTicTacToe\BlazorTicTacToe.csproj", "{348CF504-BE2D-4200-8124-3FF0DDF713E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTicTacToe", "BlazorTicTacToe\BlazorTicTacToe.csproj", "{348CF504-BE2D-4200-8124-3FF0DDF713E4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTicTacToe.Client", "BlazorTicTacToe\BlazorTicTacToe.Client\BlazorTicTacToe.Client.csproj", "{762E67AE-EF96-4C80-A624-34313E58B2A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTicTacToe.Client", "BlazorTicTacToe.Client\BlazorTicTacToe.Client.csproj", "{762E67AE-EF96-4C80-A624-34313E58B2A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

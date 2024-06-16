@@ -6,7 +6,7 @@ namespace BlazorTicTacToe.Hubs
     {
         public override Task OnConnectedAsync()
         {
-            Console.WriteLine($"Player with Id '{Context.ConnectionId}'");
+            Console.WriteLine($"Player with Id '{Context.ConnectionId}' Connected.");
             return base.OnConnectedAsync();
         }
     }
