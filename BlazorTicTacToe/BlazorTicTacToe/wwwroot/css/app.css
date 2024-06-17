@@ -653,3 +653,54 @@ input.client-input:focus {
   --tw-border-opacity: 1;
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
+
+li.client-li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(165 180 252 / var(--tw-border-opacity));
+  padding: 0.5rem;
+}
+
+span.client-span-name {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(129 140 248 / var(--tw-text-opacity));
+}
+
+/* client/component/Room.razor */
+
+table.tic-tac-toe {
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
+/* client/component/Room.razor */
+
+table.tic-tac-toe td {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #000;
+  font-size: 24px;
+  vertical-align: middle;
+  cursor: pointer;
+  height: 6rem;
+  width: 6rem;
+  border-width: 4px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+  text-align: center;
+  font-size: 4.5rem;
+  line-height: 1;
+  font-weight: 700;
+}
