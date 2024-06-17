@@ -1,4 +1,4 @@
-# SignalR Chat
+# Blazor SignalR Chat
 
 ## NuGet Package
 
@@ -42,3 +42,5 @@ https://www.hyperui.dev/
 # [ Server ]
 - Remove 'Home, Weather, Count' Component, Modify MainLayout
 ```
+
+## Ref. [Patric God](https://youtu.be/RsnndxBBFok?si=PeHHFLBt6J9AiLdy)
