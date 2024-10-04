@@ -1,4 +1,3 @@
-using TailwindApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
