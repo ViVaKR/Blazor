@@ -5,7 +5,6 @@ namespace SignalRWebpack.Hubs;
 
 public class ChatHub : Hub
 {
-    public const string HubUrl = "/hub/chat";
     public async Task NewMessage(long username, string message)
     {
         await Clients.All.SendAsync("messgeReceived", username, message);
