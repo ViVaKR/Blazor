@@ -1,0 +1,29 @@
+{
+  "name": "iam",
+  "version": "1.0.0",
+  "description": "I am KIM BUM JUN",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dotnet:watch": "dotnet watch --profile https --no-hot-reload --project ./Iam",
+    "css:build": "npx tailwindcss -i ./Iam/wwwroot/css/styles.css -o ./Iam/wwwroot/css/styles.min.css --watch",
+    "start": "concurrently \"npm run dotnet:watch\" \"npm run css:build\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.15",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.15"
+  }
+}

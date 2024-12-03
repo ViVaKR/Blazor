@@ -1,0 +1,32 @@
+﻿<div class="grid grid-cols-1">
+    <div
+         class="h-12 w-full content-center text-center  bg-teal-800 border-b-4 border-slate-400">
+        <a
+           class="text-5xl
+           text-white
+           font-cute
+           tracking-widest"
+           href="/">
+            @Title
+        </a>
+    </div>
+
+    <nav class="flex flex-col gap-8 px-4 py-8">
+
+        @foreach (var item in NavMenuItems)
+        {
+            <NavLink href="@item.Url"
+                     class="text-slate-100
+                            flex gap-4
+                            items-center
+                            rounded-md
+                            hover:bg-rose-500
+                            shadow-sm
+                          shadow-slate-100
+                            px-4 py-2">
+                <span class="material-symbols-outlined"> @item.Icon </span>
+                @item.Title
+            </NavLink>
+        }
+    </nav>
+</div>

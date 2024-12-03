@@ -1,0 +1,22 @@
+﻿@page "/counter"
+@rendermode InteractiveAuto
+
+<PageTitle>Counter</PageTitle>
+
+<div class="p-4 w-full m-0 bg-slate-100 min-h-screen">
+    <h1 class="text-teal-700 tracking-wider">Counter</h1>
+
+    <p role="status">Current count: @currentCount</p>
+
+    <button class="px-4 bg-indigo-500 rounded-lg py-2 mx-4 text-white hover:bg-rose-500"
+            @onclick="IncrementCount">Click me</button>
+</div>
+@code
+{
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
