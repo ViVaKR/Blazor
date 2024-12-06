@@ -3,6 +3,7 @@
 
 <PageTitle>Counter</PageTitle>
 
+
 <div class="p-4 w-full m-0 bg-slate-100 min-h-screen">
     <h1 class="text-teal-700 tracking-wider">Counter</h1>
 
@@ -13,10 +14,21 @@
 </div>
 @code
 {
+    private string title = "Counter";
+
+    private PanelData panelData = new PanelData();
+
+    private string GetTitle() => "From Parent menthod";
+
     private int currentCount = 0;
 
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    private class PanelData
+    {
+        public string Title { get; set; } = "From Parent object";
     }
 }

@@ -1,0 +1,46 @@
+﻿@page "/demo/{Name}"
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@rendermode InteractiveServer
+
+<PageTitle>Demo</PageTitle>
+<div class="container">
+    <h3>Demo</h3>
+    <p> @Name </p>
+
+    <DemoA Title="@ToChild" Data="@data">
+        Content of the child componetnet is supplied by the parent component.
+    </DemoA>
+
+    <div class="w-full flex justify-center my-8">
+
+        <button @onclick=GoTo
+                class="px-4 py-2 rounded-md bg-sky-500 text-white">
+            GoTo
+        </button>
+
+    </div>
+
+
+    @RenderWelcomeInfo
+    <p>Render the welcom info a second time:</p>
+    @RenderWelcomeInfo
+    @ToChild
+</div>
+@code {
+
+    [Parameter]
+    public string? Name { get; set; }
+
+    public string? Title { get; set; }
+
+    public string? ToChild = "Hi Child";
+
+    private (int, string, bool) data = new(999, "From Demo", true);
+
+    private RenderFragment RenderWelcomeInfo = @<p>Welcom to your new app!</p>;
+
+    public void GoTo()
+    {
+        navigationManager.NavigateTo($"/");
+    }
+}

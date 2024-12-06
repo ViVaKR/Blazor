@@ -2,9 +2,7 @@ namespace Iam.Components.Layout;
 
 public partial class NavMenu
 {
-
     public string Title { get; set; } = "IAM";
-
     public List<MenuItem> NavMenuItems { get; set; }
 
     public NavMenu()
@@ -12,6 +10,7 @@ public partial class NavMenu
         MenuItem menuItem = new();
         NavMenuItems = [
             new MenuItem { Icon="menu", Title = "Home", Url = "/" },
+            new MenuItem { Icon="menu", Title = "데모", Url = "demo/This is Demo Page" },
             new MenuItem { Icon="menu", Title = "코드조각", Url = "code" },
             new MenuItem { Icon="chat", Title = "능선따라", Url = "chat" },
             new MenuItem { Icon="menu", Title = "카타로그", Url = "gamecatalog" },

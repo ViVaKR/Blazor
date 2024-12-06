@@ -1,13 +1,215 @@
 ﻿@page "/chat"
 @rendermode InteractiveAuto
+@implements IDisposable
+@inject IJSRuntime JS
 
+@*
+rendermode InteractiveServer
+rendermode InteractiveWebAssembly
+rendermode InteractiveAuto
+ *@
 <PageTitle>Chat</PageTitle>
 
 
-<div class="w-full h-screen px-2 py-4 flex flex-col bg-slate-200">
-  <h3>Chat</h3>
-</div>
-@code
-{
+<div class="container-lg mx-auto px-4 py-8">
+  <h2 class="text-slate-700">@title</h2>
 
+  @functions {
+    private bool _isDisposed;
+
+
+    public void Dispose()
+    {
+      _isDisposed = true;
+    }
+  }
+
+  @functions {
+    public string GetHello()
+    {
+      return "Hello, World!";
+    }
+  }
+
+  <div>From Method: @GetHello()</div>
+
+  @{
+  var j = 0;
+  }
+
+    @while (j < 5)
+  {
+    <div class="bg-sky-500 text-white p-2 mb-1 rounded-md">
+      <text>Index -> @j</text>
+    </div>
+  j++;
+  }
+
+
+    @for (var i = 0; i< 5; i++)
+  {
+    <div class="bg-sky-500 text-white p-2 mb-1 rounded-md">
+      <text>Index: @i</text>
+    </div>
+  }
+    @{
+  var value = 1337;
+    }
+    <div>
+      @switch (value)
+      {
+      case 1:
+      <p>One</p>
+      break;
+      case 2:
+      <p>Two</p>
+      break;
+      case 1337:
+      <p>Three</p>
+      break;
+      default:
+      <p>Many</p>
+      break;
+      }
+    </div>
+
+    <div class="my-4">
+
+    </div>
+
+    <div class="my-4">
+      <div>False</div>
+      <div>Null</div>
+      <div class="">Empty</div>
+      <div class="false">False String</div>
+      <div class="active">String</div>
+      <input type="checkbox" checked="checked" name="true">
+      <input type="checkbox" name="false">
+      <input type="checkbox" name="null">
+    </div>
+
+    <div class="grid grid-cols-1 gap-1">
+
+      @foreach (var chat in chatList)
+{
+      <div class="bg-sky-500 text-white p-2 rounded-md">
+        <text>Name: @chat.Name</text>
+      </div>
 }
+
+      @{
+var csharp = true;
+        <p class="my-4 text-rose-500">Now in HTML, waw in C# @csharp</p>
+      }
+
+      @{
+void RenderName(string name)
+{
+        <p class="my-2">
+          Name: <strong class="text-sky-700">@name</strong>
+        </p>
+}
+
+RenderName("Kim Bum Jun");
+RenderName("Viv");
+      }
+
+      <div>
+        @((MarkupString)"<span>Raw HTML</span>")
+      </div>
+      <div>
+        <button @onclick="SetTitle"
+                class="px-4 py-2 my-2 rounded-md bg-sky-500  text-white">Set
+          Title</button>
+      </div>
+      <div class="columns-3">
+        <img src="images/robot-man.webp" class="rounded-md" alt="">
+        <img src="images/robot-woman.webp" class="rounded-md" alt="">
+        <img src="images/hills.webp" class="rounded-md" alt="">
+      </div>
+
+      <div class="p-4">
+        <div class="flow-root">
+          <div class="my-4">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum
+            dolorem fugiat odit esse veritatis deleniti veniam placeat obcaecati,
+            amet quisquam, praesentium repudiandae, sapiente officiis at possimus
+            sit voluptatem error necessitatibus.
+          </div>
+        </div>
+        <div class="flow-root">
+          <div class="my-4">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
+            corporis sequi beatae quidem iusto voluptatum dolorem exercitationem
+            voluptatibus nam rerum, molestias sapiente omnis! Voluptates assumenda
+            dignissimos quam soluta, iure est.
+            Minus quae quasi voluptas ea officia illum quisquam animi mollitia
+            dolores commodi perspiciatis vel iure inventore dicta libero
+            laudantium ut enim assumenda eaque impedit, velit sequi? Molestiae
+            veniam accusamus eos.
+          </div>
+        </div>
+      </div>
+
+      <span
+            class="box-decoration-slice
+                bg-gradient-to-r
+                from-indigo-600
+                to-pink-500
+                font-display
+                tracking-widest
+                py-2
+                rounded-md
+                text-2xl
+                box-content
+                text-white px-2">
+        Hello<br />
+        World
+      </span>
+
+      <span
+            class="box-decoration-clone
+                hover:box-decoration-slice
+                bg-gradient-to-r
+                from-indigo-600
+                to-pink-500
+                font-display
+                tracking-widest
+                py-2
+                mt-4
+                rounded-md
+                text-2xl
+                cursor-pointer
+                box-border
+                text-white px-2">
+        Hello<br />
+        World
+      </span>
+
+      <div
+           class="box-content hover:box-border
+
+               h-32 w-32 bg-blue-500 p-4 border-4">
+      </div>
+
+      <div class="text-slate-500">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque, nulla
+        saepe. Totam accusamus <span class="block">Hello, World</span> corporis
+        eos reiciendis consectetur ipsa ipsam,
+        voluptate maiores culpa quas quia ad maxime, dicta iure similique
+        molestias?
+        Molestias nobis minima blanditiis hic illo distinctio repudiandae quasi,
+        perferendis corporis quia non nihil in quaerat harum dolores sequi
+        aperiam. Quas illum numquam eius tempore reiciendis nihil perferendis
+        debitis necessitatibus!
+      </div>
+
+
+    </div>
+
+  </div>
+
+  @code
+  {
+
+  }

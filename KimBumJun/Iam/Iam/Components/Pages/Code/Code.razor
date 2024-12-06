@@ -1,7 +1,93 @@
 ﻿@page "/code"
-<h3>Code</h3>
+@inject IJSRuntime JsRuntime
+@rendermode InteractiveServer
+@implements IAsyncDisposable
 
+<PageTitle>코드조각</PageTitle>
+<div class="px-8 py-4 flex flex-col gap-2">
+
+    <h3>@Name</h3>
+
+
+    <button
+            @onclick="SetName"
+            class="bg-sky-500
+            text-slate-50
+            rounded-lg px-4 py-2">
+        Set Name
+    </button>
+
+    <button
+            @onclick="() => ShowAlert()"
+            class="bg-sky-500 rounded-lg px-4 py-2">Do
+        something</button>
+
+    <button
+            @onclick="ShowPrompt" class="bg-sky-500 rounded-lg px-4 py-2">Show
+        Prompt</button>
+</div>
 @code
 {
+    private IJSObjectReference? _module;
 
+    [JSInvokable]
+    private async Task ShowAlert()
+    {
+        await JsRuntime.InvokeVoidAsync("alert", "Do something");
+    }
+
+    private async Task ShowPrompt()
+    {
+        var result = await JsRuntime.InvokeAsync<string>("prompt", "Enter your name");
+        Name = result;
+    }
+
+    public string Name { get; set; } = "Code";
+
+    public void SetName()
+    {
+        Name = "Fine Thanks And You?";
+    }
+
+    public async Task DoSomething(string first, string second)
+    {
+        Name = "Blazor";
+        await Console.Out.WriteLineAsync($"First: {first}, Second: {second}");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Console.Out.WriteLineAsync("Code component initialized");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await Console.Out.WriteLineAsync("Code component rendered");
+    }
+
+    [JSInvokable]
+    public static Task<int[]> ReturnArrayAsync()
+    => Task.FromResult(new[] { 1, 2, 3 });
+
+    public class Person
+    {
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+    }
+
+    [JSInvokable]
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (_module is not null)
+        {
+            try
+            {
+                await _module.DisposeAsync();
+            }
+            catch (Exception ex)
+            {
+                await Console.Out.WriteLineAsync($"Error disposing module: {ex.Message}");
+            }
+        }
+    }
 }

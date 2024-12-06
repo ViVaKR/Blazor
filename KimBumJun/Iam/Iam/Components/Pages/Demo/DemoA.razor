@@ -1,0 +1,45 @@
+﻿@page "/demoA"
+@using System.Collections
+@inject NavigationManager navigationManager
+
+
+<h3>@Title</h3>
+<p>I am Demo A @Title </p>
+
+<div class="w-full flex justify-center my-8">
+
+    <button @onclick=GoTo
+            class="px-4 py-2 rounded-md bg-red-500 text-white">
+        Go To Demo
+    </button>
+</div>
+<div class="my-8">
+    <ul>
+        <li>ing: @Data?.Item1</li>
+        <li>string: @Data?.Item2</li>
+        <li>bool: @Data?.Item3</li>
+    </ul>
+</div>
+
+<div class="my-4">
+    @ChildContent
+</div>
+
+
+@code {
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public (int, string, bool)? Data { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public void GoTo()
+    {
+        navigationManager.NavigateTo($"/demo/From Demo A");
+    }
+
+}

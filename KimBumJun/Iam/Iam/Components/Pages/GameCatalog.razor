@@ -1,4 +1,5 @@
 ﻿@page "/gamecatalog"
+@using Models
 
 <PageTitle>GameCatalog</PageTitle>
 
@@ -12,18 +13,37 @@
         <th>Genre</th>
         <th>Price</th>
         <th>Release Date</th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+
+      @foreach (var game in Games)
+      {
+        <tr>
+          <td>@game.Id</td>
+          <td>@game.Name</td>
+          <td>@game.Genre</td>
+          <td>@game.Price</td>
+          <td>@game.ReleaseDate</td>
+          <td>
+            <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Edit </button>
+          </td>
+          <td>
+            <button
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              Delete </button>
+          </td>
+        </tr>
+      }
+
     </tbody>
   </table>
+
+
 </div>
 
 @code
