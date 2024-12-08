@@ -224,33 +224,11 @@ const config = {
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/line-clamp')
+    // require('@tailwindcss/forms'),
+    // require('@tailwindcss/typography'),
+    // require('@tailwindcss/aspect-ratio'),
+    // require('@tailwindcss/line-clamp')
   ],
 };
 
 export default config;
-
-
-/** @type {import('tailwindcss').Config} */
-// module.exports = {
-//   content: [
-//     './Iam/**/*.razor',
-//     './Iam/**/*.html',
-//     './Iam/**/*.cshtml',
-//     './Iam.Client/**/*.razor',
-//     './Iam.Client/**/*.html',
-//     './Iam.Client/**/*.cshtml',
-//   ],
-//   theme: {
-//     extend: {},
-//   },
-//   plugins: [
-//     require('@tailwindcss/forms'),
-//     require('@tailwindcss/typography'),
-//     require('@tailwindcss/aspect-ratio'),
-//     require('@tailwindcss/line-clamp')
-//   ],
-// }

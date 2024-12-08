@@ -7,3 +7,31 @@
   margin: 0;
   box-sizing: border-box;
 }
+/*
+.demo div div:first-child + div {
+  background-color: rgb(17, 205, 36);
+}
+
+.demo-b div:first-child {
+  background-color: rgb(17, 205, 36);
+} */
+
+/* .demo-a {
+  background-color: rgb(17, 205, 36);
+} */
+
+.demo-c > a {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  border-radius: 0.5rem;
+}
+
+.demo-c:active {
+  background-color: rgb(17, 205, 36);
+  background-color: rgb(17, 205, 36);
+}
+
+.demo {
+  margin: 1rem;
+}

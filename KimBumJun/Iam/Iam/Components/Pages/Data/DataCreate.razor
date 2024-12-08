@@ -1,0 +1,82 @@
+﻿@page "/data/create"
+@rendermode InteractiveServer
+
+<PageTitle>DataCreate</PageTitle>
+
+<h1 class="text-center pt-8 text-slate-700">Creatm e</h1>
+
+<div class="create-container w-full flex flex-col">
+
+    @*  *@
+    <form action="/handling-form-page" method="post">
+        <ul>
+            <li>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name">
+            </li>
+
+            <li class="relative">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+                <span class="material-symbols-outlined
+                            absolute
+                            top-1/2
+                            translate-y-1
+                            text-slate-400
+                            right-4">
+                    mail
+                </span>
+            </li>
+
+            <li>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+            </li>
+
+            <li>
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password"
+                       name="confirm-password">
+            </li>
+
+            <li>
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone">
+            </li>
+
+            <li>
+                <label for="message">Message </label>
+                <textarea id="message" name="message" rows="15"
+                          noresize></textarea>
+            </li>
+            <li>
+                <button type="submit">Submit</button>
+            </li>
+        </ul>
+    </form>
+
+    @*  *@
+    <form action="list-form h-auto w-full ">
+        <fieldset>
+            <legend>Update</legend>
+            <p>
+                <input type="radio" name="size" id="size_1" value="small">
+                <label for="size_1">Small</label>
+            </p>
+            <p>
+                <input type="radio" name="size" id="size_2" value="medium">
+                <label for="size_2">Medium</label>
+            </p>
+            <p>
+                <input type="radio" name="size" id="size_3" value="large">
+                <label for="size_3">Large</label>
+            </p>
+        </fieldset>
+    </form>
+
+</div>
+
+
+@code {
+
+}

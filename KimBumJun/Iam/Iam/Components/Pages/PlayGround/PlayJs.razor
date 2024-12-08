@@ -1,0 +1,100 @@
+﻿@page "/playjs"
+@inject IJSRuntime JS
+@using BlazorPageScript
+@implements IAsyncDisposable
+
+<PageTitle>PlayGround JavaScript</PageTitle>
+
+<div class="flex flex-col gap-2">
+    <h3>@Title</h3>
+
+    <button @onclick="async () =>await ShowAlert()"
+            class="px-4
+            py-2
+            rounded-lg
+            bg-sky-500
+            my-4
+            mx-4
+            text-slate-50">
+        Call showPrompt
+    </button>
+
+    <button @onclick='() => ConsoleLog("Hello World!")'
+            class="px-4
+            py-2
+            rounded-lg
+            bg-sky-500
+            my-4
+            mx-4
+            text-slate-50">
+        Call showPrompt
+    </button>
+
+    <button @onclick='() => ShowPrompt()'
+            class="px-4
+            py-2
+            rounded-lg
+            bg-sky-500
+            my-4
+            mx-4
+            text-slate-50">
+        Set Title
+    </button>
+
+</div>
+
+@code {
+
+    public string? Name { get; set; }
+
+    private IJSObjectReference? module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("console.log", "Loaded");
+
+            @* module = await JS.InvokeAsync<IJSObjectReference>("import",
+            "./{PATH}/PlayJs.razor.js"); *@
+
+            @* module = await JS.InvokeAsync<IJSObjectReference>("import",
+            "PlayJs.razor.js"); *@
+            @* await module.InvokeAsync<string>("helloworld"); *@
+        }
+    }
+
+    [JSInvokable]
+    private async Task ShowAlert()
+    {
+        await JS.InvokeVoidAsync("alert", "Do something");
+    }
+
+    [JSInvokable]
+    private async Task ConsoleLog(string? message)
+    {
+        await JS.InvokeVoidAsync("console.log", message);
+    }
+
+    private async Task ShowPrompt()
+    {
+        var result = await JS.InvokeAsync<string>("prompt", "Enter your name");
+        Title = Name = result;
+    }
+
+    [JSInvokable]
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (module is not null)
+        {
+            try
+            {
+                await module.DisposeAsync();
+            }
+            catch (JSDisconnectedException)
+            {
+                @* await Console.Out.WriteLineAsync($"Error disposing module: {ex.Message}"); *@
+            }
+        }
+    }
+}

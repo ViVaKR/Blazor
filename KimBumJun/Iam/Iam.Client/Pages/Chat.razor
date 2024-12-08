@@ -3,12 +3,8 @@
 @implements IDisposable
 @inject IJSRuntime JS
 
-@*
-rendermode InteractiveServer
-rendermode InteractiveWebAssembly
-rendermode InteractiveAuto
- *@
 <PageTitle>Chat</PageTitle>
+
 
 
 <div class="container-lg mx-auto px-4 py-8">
@@ -20,6 +16,7 @@ rendermode InteractiveAuto
 
     public void Dispose()
     {
+      if(_isDisposed) return;
       _isDisposed = true;
     }
   }
@@ -33,28 +30,35 @@ rendermode InteractiveAuto
 
   <div>From Method: @GetHello()</div>
 
-  @{
-  var j = 0;
-  }
+<div class="demo flex flex-col gap-1">
+  <div class="demo-c">
+    <button type="button" href="https://code.vivabm.com" target="_blank">vivabm</button>
+  </div>
+  <div class="my-4"></div>
+  <div class="demo-a">
+  @{ var j = 0; }
 
     @while (j < 5)
-  {
-    <div class="bg-sky-500 text-white p-2 mb-1 rounded-md">
-      <text>Index -> @j</text>
-    </div>
-  j++;
-  }
-
-
-    @for (var i = 0; i< 5; i++)
-  {
-    <div class="bg-sky-500 text-white p-2 mb-1 rounded-md">
-      <text>Index: @i</text>
-    </div>
-  }
-    @{
-  var value = 1337;
+    {
+      <div class="bg-sky-500 text-white p-2 mb-1 rounded-md">
+        <text>Index -> @j</text>
+      </div>
+      j++;
     }
+  </div>
+
+  <div class="demo-b">
+    @for (var i = 0; i< 5; i++)
+    {
+      <div class="bg-sky-500 text-white p-2 mb-1 rounded-md">
+        <text>Index: @i</text>
+      </div>
+    }
+  </div>
+
+</div>
+    @{ var value = 1337; }
+
     <div>
       @switch (value)
       {

@@ -1,11 +1,77 @@
-﻿@page "/demo/{Name}"
+﻿@page "/demo"
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 @rendermode InteractiveServer
 
 <PageTitle>Demo</PageTitle>
+
+<h3 class="text-center pt-12">Demo</h3>
+
 <div class="container">
-    <h3>Demo</h3>
+
     <p> @Name </p>
+
+    <p>
+        <a href="https://code.vivkr.com" title="vivakr">vivakr</a>
+        <a href='https://code.vivabm.com'></a>
+    </p>
+    <input type="text" disabled="disabled">
+    <input type="text" class="my-1" readonly="readonly">
+    <input type="text">
+
+    <div class="my-1">
+        <p>&lt; Hello, World &gt;</p>
+        <p>&quot; Hi &quot;</p>
+        <p>&apos; Everyone &apos;</p>
+        <p>&amp;</p>
+
+    </div>
+    <div>
+        <p>
+            Semantic ( 직역 : 의미를 담은, 의미론적인 )
+        </p>
+        <p>
+            example: <em>em</em> (Emphasis) : 강조, 중요
+
+        </p>
+        <p>
+            This liquid is ,<strong>highly toxic</strong>.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <i>Hic</i> repellendus,
+            nihil distinctio placeat consequatur pariatur facere itaque
+            reiciendis <b>Viv</b> provident vero debitis ut. Reiciendis unde
+            quis ut amet
+            doloribus <u>Underline</u> quidem vero.
+        </p>
+        <p>
+            &lt;i&gt; : 외래어, 분류학 명칭, 전문 용어, 생각...
+
+        </p>
+        <p>
+            &lt;b&gt; : 주요단어, 제품 이름, 주요 문장..
+        </p>
+        <p class="my-4">
+            <a type="button"
+               class="px-4 py-2 bg-sky-500 text-white rounded-md"
+               href="demo#button_goto">go buttom</a>
+        </p>
+        <p>
+            <a href="#" download="download-man.txt">Dowonload</a>
+        </p>
+        <p>
+            <a href="mailto:bm@live.co.kr">전자메일 보내기</a>
+        </p>
+    </div>
+
+
+    <div class="my-24 w-full h-auto bg-slate-400 p-8 rounded-lg">
+        <DemoD />
+        <button @onclick='() => GoTo("/demo/demoD")'
+                class="px-4 py-2 rounded-md bg-sky-500 text-white">
+            GoTo
+        </button>
+    </div>
 
     <DemoA Title="@ToChild" Data="@data">
         Content of the child componetnet is supplied by the parent component.
@@ -13,8 +79,8 @@
 
     <div class="w-full flex justify-center my-8">
 
-        <button @onclick=GoTo
-                class="px-4 py-2 rounded-md bg-sky-500 text-white">
+        <button @onclick='() => GoTo("/")' id="button_goto">
+            class="px-4 py-2 rounded-md bg-sky-500 text-white">
             GoTo
         </button>
 
@@ -39,8 +105,9 @@
 
     private RenderFragment RenderWelcomeInfo = @<p>Welcom to your new app!</p>;
 
-    public void GoTo()
+    public void GoTo(string? url = null)
     {
-        navigationManager.NavigateTo($"/");
+        navigationManager.NavigateTo(url ?? "/");
+
     }
 }
