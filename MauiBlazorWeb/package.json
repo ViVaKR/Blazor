@@ -1,0 +1,25 @@
+{
+  "name": "mauiblazorweb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dotnet:watch": "dotnet watch --profile https --no-hot-reload --project ./MauiBlazorWeb.Web/MauiBlazorWeb.Web.csproj",
+    "css:build": "npx tailwindcss -i ./MauiBlazorWeb.Shared/wwwroot/css/styles.css -o ./MauiBlazorWeb.Shared/wwwroot/css/styles.min.css",
+    "start": "concurrently \"npm run dotnet:watch\" \"npm run css:build\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.0-beta.6",
+    "@tailwindcss/postcss": "^4.0.0-beta.6",
+    "@tailwindcss/vite": "^4.0.0-beta.6",
+    "tailwindcss": "^4.0.0-beta.6"
+  }
+}
