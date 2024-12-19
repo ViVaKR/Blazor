@@ -1,0 +1,12 @@
+.actions {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+}
+
+.actions button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

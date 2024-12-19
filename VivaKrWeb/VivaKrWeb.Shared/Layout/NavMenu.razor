@@ -1,30 +1,36 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿<div class="top-row navbar navbar-dark !bg-sky-950">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">VivaKrWeb</a>
+        <a class="navbar-brand mx-auto tracking-widest" href="/">ViVaKR</a>
     </div>
 </div>
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+<div class="nav-scrollable"
+     onclick="document.querySelector('.navbar-toggler').click()">
+    <nav
+         class="flex-col
+         bg-gradient-to-b
+         from-sky-950
+         via-yellow-800
+         to-teal-600
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
+         h-screen">
+        @foreach (var item in MenuItems)
+        {
+            <div class="nav-item px-2">
+                <NavLink class="nav-link px-4
+                        font-poppins
+                        hover:!text-rose-400
+                        text-md tracking-wide"
+                         href="@item.Url"
+                         Match="NavLinkMatch.All">
+                    <span class="material-symbols-outlined mr-4">
+                        @item.Icon
+                    </span>
+                    @item.Text
+                </NavLink>
+            </div>
+        }
     </nav>
 </div>
-

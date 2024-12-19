@@ -8,7 +8,7 @@ builder.WebHost.UseUrls("https://localhost:50005");
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+builder.Services.AddHttpClient();
 // Add device-specific services used by the VivaKrWeb.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 
