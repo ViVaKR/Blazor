@@ -1,7 +1,218 @@
 ﻿@page "/Code/Code"
+@page "/Code/Code/{id}"
 
-<h3>Code</h3>
+@* HTML Start *@
+<div
+     class="w-full h-auto grid grid-cols-2 gap-4 gap-y-4 bg-sky-200 px-2 py-2">
 
-@code {
+  @* Left (1) *@
+  <div>
+    <div class="accordion" id="accordionExample">
 
-}
+      @foreach (var item in dataList)
+      {
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#@item.Target"
+                    aria-expanded="false" aria-controls="@item.Target">
+              @item.Title
+            </button>
+          </h2>
+          <div id="@item.Target" class="accordion-collapse collapse"
+               data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              @((MarkupString)item.Content)
+            </div>
+          </div>
+        </div>
+      }
+
+    </div>
+
+  </div>
+
+  @* Right (2) *@
+  <div>
+    <p class="bg-slate-300 px-2 py-2 rounded-lg">@Id</p>
+    <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            @onclick="@(async () => await NavigateToPage("/Code/Code", 8947))">Go
+      123</button>
+  </div>
+
+  @* Modal  *@
+
+  <div>
+    <button type="button"
+            class="btn btn-outline-danger" data-bs-toggle="modal" #
+            data-bs-target="#modalA">
+      Launch modal
+    </button>
+  </div>
+
+  <div class="modal fade" id="modalA" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalLabel">Title</h1>
+          <button type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal">
+          </button>
+        </div>
+        <div class="modal-body">
+
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Consequuntur officia nobis, assumenda adipisci iure voluptates iste
+          dolore necessitatibus enim, corporis, veritatis voluptatem commodi.
+          Harum dignissimos accusantium veniam voluptas, omnis distinctio?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto at
+          eius quod itaque deserunt beatae, magnam quas nostrum vero
+          voluptatum pariatur amet in omnis neque aperiam corrupti quasi
+          inventore eos.
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi,
+          eius laborum at voluptatem dolorum veritatis animi numquam tempora
+          laudantium quibusdam dicta quo ea nobis possimus quae dolore porro
+          ad? Mollitia!
+          Porro non aperiam quod, iste ipsam iure sint provident earum minima
+          temporibus officiis odit molestias voluptas fugiat fugit recusandae.
+          Dolor quasi consequuntur voluptates blanditiis deleniti fugiat
+          tempora ipsum porro. Exercitationem!
+          Ab dolorum aperiam totam quae? Similique veritatis accusamus ab
+          delectus nihil nulla voluptates, tempora reprehenderit modi a non
+          velit, dolore autem eum saepe nisi possimus pariatur iusto. Quo,
+          provident sed?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
+          dignissimos reprehenderit, voluptatibus consectetur eaque explicabo
+          ducimus dolorem, laboriosam rerum quibusdam quis at quasi iste nulla
+          dolore est nostrum assumenda reiciendis?
+          Pariatur sunt vitae ipsum ullam! Totam ipsa ducimus placeat vero
+          aperiam nostrum incidunt expedita, sapiente ratione, recusandae at
+          saepe quod doloremque odio soluta eligendi dolor veritatis magni
+          perferendis optio quas.
+          Deleniti consequuntur quas eveniet alias vitae veniam modi ipsum esse
+          omnis consequatur corporis molestiae dignissimos quam iste, natus
+          cumque. Nesciunt dignissimos ratione magnam autem inventore corporis
+          esse quibusdam officiis ipsa.
+          Distinctio sit, laborum iste velit nam saepe? Officia ut iure
+          aspernatur dignissimos adipisci eligendi corporis voluptate
+          perferendis ipsam, quo itaque facere cupiditate repellendus facilis
+          asperiores dolore earum, vitae eum ad.
+          Impedit labore reiciendis minima dolor! Assumenda labore iusto, magnam
+          earum molestias ut similique quia voluptates provident non.
+          Asperiores, quam eaque, magnam eos a sapiente aspernatur voluptatem
+          enim nulla delectus maxime.
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary"
+                  data-bs-dismiss="modal">닫기 </button>
+          <button type="button" class="btn btn-outline-primary">저장</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  @* Pagination *@
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link">Previous</a>
+      </li>
+      @for (int i = 1; i <= 5; i++)
+      {
+        <li class="page-item">
+          <a class="page-link cursor-pointer">@i</a>
+        </li>
+      }
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </nav>
+
+  @* Popover *@
+  <div>
+    <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover"
+            data-bs-title="Popover title"
+            data-bs-content="And here's some amazing content. It's very engaging. Right?">Click
+      to toggle popover</button>
+  </div>
+
+  <button type="button" class="btn btn-secondary"
+          data-bs-toggle="tooltip" data-bs-placement="top"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="This top tooltip is themed via CSS variables.">
+    Custom tooltip
+  </button>
+
+
+
+</div> @* HTML End *@
+
+@*
+<!-- 1. 필수적인 경우 -->
+<div class="modal"
+     id="criticalModal"
+     aria-labelledby="modalLabel"    <!-- 필수 -->
+     aria-hidden="true">            <!-- 필수 -->
+     <!-- 정부/공공 서비스, 금융 서비스 -->
+</div>
+
+<!-- 2. 권장사항인 경우 -->
+<div class="modal"
+     id="simpleModal">
+     <!-- 일반 상업용 웹사이트 -->
+</div>
+
+
+--> Role (역할)
+role="alert"
+role="button"
+role="dialog"
+role="navigation"
+role="search"
+role="slider"
+
+--> States (상태)
+aria-expanded="true|false"
+aria-checked="true|false"
+aria-disabled="true|false"
+aria-selected="true|false"
+
+--> Properties (속성)
+aria-label="설명"
+aria-labelledby="ID참조"
+aria-describedby="ID참조"
+aria-controls="ID참조"
+
+--> Live Regions (실시간 영역)
+aria-live="polite|assertive|off"
+aria-atomic="true|false"
+aria-relevant="additions|removals|text|all"
+
+--> Drag and Drop (드래그 앤 드롭)
+aria-grabbed="true|false"
+aria-dropeffect="copy|move|link|execute|popup|none"
+
+--> Widgets (위젯)
+
+aria-haspopup="true|false"
+aria-owns="ID참조"
+aria-activedescendant="ID참조"
+aria-posinset="순서"
+aria-setsize="전체크기"
+
+
+[결론]
+- 웹 접근성을 높이기 위해 ARIA 속성을 사용한다.
+- ARIA 속성은 HTML 요소에 추가하여 사용한다.
+- ARIA 속성은 스크린리더 사용자에게 정보를 전달한다.
+- ARIA 속성은 HTML5에서 사용할 수 있다.
+- ARIA 속성은 WAI-ARIA 표준에 따라 사용한다.
+- ARIA 속성은 접근성을 높이기 위해 사용한다.
+- ARIA 속성은 웹 접근성을 높이기 위해 사용한다.
+- aria-* 접두사로 시작
+ *@

@@ -3,17 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts:build": "tsc",
+    "ts:watch": "tsc -w",
     "dotnet:maui": "dotnet run --project ./VivaKrWeb --framework net9.0-maccatalyst",
     "css:watch": "npx tailwindcss -i VivaKrWeb.Shared/wwwroot/app.css -o VivaKrWeb.Shared/wwwroot/css/app.min.css --watch",
     "dotnet:watch": "dotnet watch --profile https --no-hot-reload --project ./VivaKrWeb.Web",
-    "start": "concurrently \"npm run dotnet:watch\" \"npm run css:watch\""
+    "start": "concurrently \"npm run dotnet:watch\" \"npm run css:watch\" \"npm run ts:watch\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "autoprefixer": "^10.4.20",
     "bootstrap": "^5.3.3",
     "concurrently": "^9.1.0",
@@ -23,5 +25,9 @@
     "postcss-import": "^16.1.0",
     "postcss-scss": "^4.0.9",
     "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^5.2.10",
+    "typescript": "^5.7.2"
   }
 }

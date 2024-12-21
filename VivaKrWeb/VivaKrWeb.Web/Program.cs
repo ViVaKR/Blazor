@@ -11,6 +11,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddHttpClient();
 // Add device-specific services used by the VivaKrWeb.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
+// JSInterop 서비스 등록
+builder.Services.AddScoped<IJSInteropService, JSInteropService>();
 
 var app = builder.Build();
 
