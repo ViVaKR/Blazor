@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TailwindApp", "TailwindApp\TailwindApp.csproj", "{32A36A84-F34E-482F-B413-2C7EBCDF0075}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesWebApp", "MoviesWebApp\MoviesWebApp.csproj", "{CEE555D8-0CCA-4F98-8918-97C8926DD626}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{32A36A84-F34E-482F-B413-2C7EBCDF0075}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32A36A84-F34E-482F-B413-2C7EBCDF0075}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32A36A84-F34E-482F-B413-2C7EBCDF0075}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEE555D8-0CCA-4F98-8918-97C8926DD626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEE555D8-0CCA-4F98-8918-97C8926DD626}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEE555D8-0CCA-4F98-8918-97C8926DD626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEE555D8-0CCA-4F98-8918-97C8926DD626}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

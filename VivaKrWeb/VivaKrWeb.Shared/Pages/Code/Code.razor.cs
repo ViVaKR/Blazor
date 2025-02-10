@@ -17,6 +17,12 @@ public partial class Code : ComponentBase
 
     private string? statusParameter;
 
+    private string? statusMessage;
+
+    private readonly List<string> dataItems = [
+        "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"
+        ];
+
     [Inject]
     public NavigationManager? NavigationManager { get; set; } = default!;
     // 라이프사이클 메서드 ///////////////////////////////////////////////////////////////
@@ -39,7 +45,78 @@ public partial class Code : ComponentBase
             // await Js.InvokeVoidAsync("initializePopovers");
             await Js.InvokeVoidAsync("console.log", "Code page rendered");
             var module = await Js.InvokeAsync<IJSObjectReference>("import", JsModules.ModulePath.Code);
-            await module.InvokeVoidAsync("initialize");
+            var result = await module.InvokeAsync<string>("initialize");
+            await Js.InvokeVoidAsync("console.log", result);
+
+            statusMessage = result;
+            await InvokeAsync(StateHasChanged);
+            await Task.Delay(1000);
+            // await Js.InvokeVoidAsync("alert", "Code page rendered");
+            /*
+                --> StateHasChanged 동작 원리 설명
+
+                1. **목적**
+                - UI 갱신 트리거
+                - 컴포넌트 상태 변경 알림
+                - 렌더링 대기열에 등록
+
+                2. **작동 방식**:
+                ```csharp
+
+
+                await InvokeAsync(StateHasChanged);
+                ```
+                -
+
+                InvokeAsync
+
+                : UI 스레드에서 실행 보장
+                -
+
+                StateHasChanged
+
+                : 컴포넌트 리렌더링 요청
+                - `await`: 렌더링 완료 대기
+
+                3. **사용해야 하는 경우**:
+                - 비동기 작업 후 UI 갱신 필요
+                - JavaScript interop 이후
+                - 백그라운드 작업 완료 후
+                - 수동 상태 변경 시
+
+                4. **주의사항**:
+                - UI 스레드에서만 호출
+                - 불필요한 호출 피하기
+                - 렌더링 성능 고려
+             */
+
+            /*
+               -->  1. 동기 호출 - 허용됨
+               StateHasChanged();
+
+               --> 2. 비동기 호출 - UI 스레드 보장
+               await InvokeAsync(StateHasChanged);
+
+             */
+
+            /*
+               --> // 1. UI 스레드에서 직접 호출 가능
+               private void OnButtonClick()
+               {
+                   _someValue = "변경됨";
+                   StateHasChanged();  // 동기 호출 OK
+               }
+
+               --> // 2. 비UI 스레드에서는 InvokeAsync 필요
+               private async Task BackgroundWork()
+               {
+                   await Task.Run(() => {
+                       _someValue = "백그라운드 처리";
+                       await InvokeAsync(StateHasChanged);  // 비동기 필수
+                   });
+               }
+
+             */
         }
     }
 

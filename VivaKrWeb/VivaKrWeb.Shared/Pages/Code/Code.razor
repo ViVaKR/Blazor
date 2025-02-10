@@ -2,10 +2,61 @@
 @page "/Code/Code/{id}"
 
 @* HTML Start *@
+
+<nav class="navbar bg-primary navbar-expand-lg" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search"
+             aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
 <div
      class="w-full h-auto grid grid-cols-2 gap-4 gap-y-4 bg-sky-200 px-2 py-2">
 
   @* Left (1) *@
+
+  <div>
+    <label for="detaInput">Datalist</label>
+    <input type="text" class="form-control" list="datalistOptions"
+           id="detaInput"
+           placeholder="Type to search...">
+    <datalist id="datalistOptions">
+      @foreach (var item in dataItems)
+      {
+        <option value="@item" class="font-poppins" />
+      }
+    </datalist>
+
+  </div>
+
   <div>
     <div class="accordion" id="accordionExample">
 
@@ -140,18 +191,116 @@
             data-bs-content="And here's some amazing content. It's very engaging. Right?">Click
       to toggle popover</button>
   </div>
+  <div>
+    <button type="button" class="btn btn-secondary"
+            data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-custom-class="custom-tooltip"
+            data-bs-title="This top tooltip is themed via CSS variables.">
+      Custom tooltip
+    </button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Result:
+    @statusMessage
+  </div>
 
-  <button type="button" class="btn btn-secondary"
-          data-bs-toggle="tooltip" data-bs-placement="top"
-          data-bs-custom-class="custom-tooltip"
-          data-bs-title="This top tooltip is themed via CSS variables.">
-    Custom tooltip
-  </button>
+  @* Offcanvas *@
+  <div>
+    <button class="btn btn-info" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasWithBothOptions"
+            aria-controls="offcanvasWithBothOptions">
+      Enable both scrolling & backdrop
+    </button>
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true"
+         tabindex="-1" id="offcanvasWithBothOptions">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdrop
+          with scrolling</h5>
+        <button type="button" class="btn-close"
+                data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <p>
+          Try scrolling the rest of the page to see this option in action.
+        </p>
+      </div>
+    </div>
+  </div>
 
+  @* Dropdown *@
+  <div class="dropdown" data-bs-theme="dark">
+    <button
+            data-bs-toggle="dropdown"
+            id="dropdownMenuButtonLight" aria-expanded="false"
+            class="btn btn-secondary dropdown-toggle">
+      Dark theme
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonLight">
+      <li>
+        <a href="#" class="dropdown-item active">Active</a>
+      </li>
+      <li>
+        <a href="#" class="dropdown-item">Another action</a>
+      </li>
+      <li>
+        <a href="#" class="dropdown-item">Something else here</a>
+      </li>
+      <li class="dropdown-divider"></li>
+      <li>
+        <a href="#" class="dropdown-item">Separated link</a>
+      </li>
+    </ul>
+  </div>
+
+  @* Range *@
+  <div>
+    <label for="customRange">현재 값: @currentValue</label>
+    <input type="range"
+           class="form-range"
+           @bind-value="currentValue"
+           @bind-value:event="oninput"
+           min="0" max="10"
+           step="0.5"
+           id="customRange">
+  </div>
+
+  @*  *@
+  <div>
+    <label for="emailInput">Email Address</label>
+    <input type="text" readonly class="form-control-plaintext px-4 py-2"
+           id="emailInput"
+           placeholder="name@example.com" value="name@example.com">
+
+    <label for="pwdInput"></label>
+    <input type="password" class="form-control form-control-sm" id="pwdInput"
+           placeholder="Password">
+    <div class="text-slate-400 text-pretty font-cute text-end">Must be 8-20
+      characters
+      long
+    </div>
+
+    <label for="fileInput">File Input </label>
+    <input type="file" class="form-control form-control-sm" id="fileInput">
+
+    <label for="colorInput" class="mt-4">Color Picker</label>
+    <input type="color" class="form-control form-control-color" id="colorInput"
+           value="#ff0000" title="Color Picker">
+
+  </div>
+
+  <div>
+    <label for="memo">Memo</label>
+    <textarea
+              class="form-control"
+              name="memo" id="memo" row=5></textarea>
+  </div>
 
 
 </div> @* HTML End *@
 
+@code {
+  private double currentValue = 5;
+}
 @*
 <!-- 1. 필수적인 경우 -->
 <div class="modal"

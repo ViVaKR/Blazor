@@ -1,3 +1,6 @@
 .collapse.show {
   visibility: visible;
 }
+.collapse.navbar-collapse {
+  visibility: visible;
+}
