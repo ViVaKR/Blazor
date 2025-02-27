@@ -1,0 +1,32 @@
+﻿@page "/"
+@using System.Diagnostics
+@inject IJSRuntime Js
+
+<h3>Dashboard</h3>
+<p>Hello, World! Fine Thanks And You?</p>
+<p>Blazor</p>
+<button @onclick="ShowAlert"
+        class="px-4 m-4 py-2 rounded-lg bg-rose-500 text-white">Show
+  Alert</button>
+<button @onclick="Hi"
+        class="px-4 m-4 py-2 rounded-lg bg-rose-500 text-white">Message</button>
+
+<h1>@Message</h1>
+
+@code
+{
+  private string? Message { get; set; } = "Hello, World!";
+
+  private async Task Hi()
+  {
+    Console.WriteLine("Hi 메서드 호출됨");
+    Message = "Hello, World! Fine Thanks And You?";
+    await InvokeAsync(StateHasChanged);
+  }
+
+  private async Task ShowAlert()
+  {
+    Console.WriteLine("ShowAlert 메서드 호출됨");
+    await Js.InvokeVoidAsync("alert", "Hello from Blazor!");
+  }
+}

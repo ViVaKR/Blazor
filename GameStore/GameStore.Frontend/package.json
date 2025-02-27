@@ -1,0 +1,27 @@
+{
+    "name": "gamestore.frontend",
+    "version": "1.0.0",
+    "description": "GameStore Frontend",
+    "private": true,
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "css:build": "npx tailwindcss -i ./wwwroot/css/app.css -o ./wwwroot/css/app.min.css --watch --poll=1000",
+        "css:prod": "npx tailwindcss -i ./wwwroot/css/app.css -o ./wwwroot/css/app.min.css --minify",
+        "dotnet:watch": "dotnet watch --no-hot-reload",
+        "start": "concurrently \"npm run dotnet:watch\" \"npm run css:build\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.5.9",
+        "autoprefixer": "^10.4.20",
+        "concurrently": "^9.1.0",
+        "postcss": "^8.4.49",
+        "tailwindcss": "^3.4.15"
+    },
+    "dependencies": {
+        "postcss-cli": "^11.0.0"
+    }
+}
