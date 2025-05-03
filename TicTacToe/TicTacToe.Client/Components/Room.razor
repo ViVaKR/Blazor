@@ -1,0 +1,65 @@
+<h3>Room</h3>
+
+@code {
+    private string? myPlayerId;
+    
+    [CascadingParameter]
+    public HubConnection? HubConnection { get; set; }
+    
+    [Parameter]
+    public GameRoom? CurrentRoom { get; set; }
+    
+    // Called when the component is initialized
+    protected override async Task OnInitializedAsync()
+    {
+        if(CurrentRoom is null
+           || HubConnection?.ConnectionId is null)
+        {
+            await Task.CompletedTask;
+            return;
+        }
+
+        myPlayerId = HubConnection.ConnectionId;
+        
+        // 플레이어 합류 이벤트 등록
+        HubConnection?.On<Player>("PlayerJoined",
+            player =>
+            {
+                // 플레이어 추가
+                CurrentRoom?.Players.Add((player));
+                
+                // UI 갱신
+                StateHasChanged();
+                
+            });
+        
+        // 방 이벤트 등록
+        HubConnection?.On<GameRoom>("UpdateGame", serverRoom =>
+        {
+            CurrentRoom = serverRoom; // 방 갱신 
+            StateHasChanged(); // UI 업데이트
+        });
+    }
+    
+    // 게임 시작
+    private async Task StartGame()
+    {
+        if (HubConnection is null || CurrentRoom is null)
+        {
+            await Task.CompletedTask;
+            return;
+        }
+        
+        // Invoke the StartGame method on the Server
+        await HubConnection.InvokeAsync("StartGame", CurrentRoom.RoomId);
+        
+    }
+
+
+}
+
+
+
+
+
+
