@@ -1,47 +1,176 @@
-<h3>Room</h3>
+﻿@if (CurrentRoom is not null)
+{
+    @* ? 현재 방 이름 *@
+    <h3 class="text-red-400 text-3xl text-center my-8 mb-4">@CurrentRoom.RoomName</h3>
 
-@code {
+    @* ? 현재 플레이어 이름 표시 추가 *@
+    @if (myPlayer is not null)
+    {
+        <p class="text-center text-lg mb-4">환영합니다, <span class="font-semibold text-cyan-400">@MyDisplayName</span> 님!</p>
+        @* 또는 '@myPlayer.Name' 직접 사용 *@
+    }
+    else
+    {
+         <p class="text-center text-lg mb-4 text-slate-500">플레이어 정보 로딩 중...</p>
+    }
+    @* ================================== *@
+    if (CurrentRoom.Players.Count < 2)
+    {
+        <p class="text-slate-400 text-xs text-center"> 게임 상대를 기다리는 중입니다. </p>
+    }
+
+    @* ? If the game has not started and the current player is not the host *@
+    @* ? 게임이 시작되지 않았고, 현재 플레이어가 접속하지 않았을 떄 *@
+    if (!CurrentRoom.Game.GameStarted
+    && CurrentRoom.Players.Count == 2 // 2명의 플레이어가 채워 졌으며
+    && CurrentRoom.Game.PlayerXId != myPlayerId) // 현재
+    {
+        <p class="text-slate-400"> 게임시작을 기다리는 중...</p>
+    }
+
+    if (CurrentRoom.Game.GameOver && CurrentRoom.Game.IsDraw)
+    {
+        <h4>게임종료 무승부입니다.</h4>
+    }
+
+    @if (CurrentRoom.Game.GameOver)
+    {
+        <div class="game-over-message text-center my-4"> @* 스타일링 위한 div 추가 *@
+            @if (CurrentRoom.Game.IsDraw)
+            {
+                <h4 class="text-2xl text-yellow-500">무승부입니다!</h4>
+                <p class="text-slate-400">다음 게임에서 승리하세요!</p>
+            }
+            else
+            {
+                var winnerSymbol = CurrentRoom.Game.Winner; // "X" 또는 "O"
+                var winnerPlayer = CurrentRoom.Players.FirstOrDefault(p =>
+                (winnerSymbol == "X" && p.ConnectionId == CurrentRoom.Game.PlayerXId) ||
+                (winnerSymbol == "O" && p.ConnectionId == CurrentRoom.Game.PlayerOId));
+                var loserPlayer = CurrentRoom.Players.FirstOrDefault(p => p.ConnectionId != winnerPlayer?.ConnectionId);
+
+                @if (winnerPlayer is not null && winnerPlayer.ConnectionId == myPlayerId)
+                {
+                    <h4 class="text-2xl text-green-500">🎉 축하합니다! 승리하셨습니다! 🎉</h4>
+                    <p class="text-slate-300">상대방 @(loserPlayer?.Name ?? "플레이어")에게 승리했습니다.</p>
+                }
+                @* 현재 플레이어가 패자인지 확인 *@
+                else if (loserPlayer is not null && loserPlayer.ConnectionId == myPlayerId)
+                {
+                    <h4 class="text-2xl text-red-500">아쉽지만 패배하셨습니다. 😥</h4>
+                    <p class="text-slate-400">승자는 @(winnerPlayer?.Name ?? "상대방")입니다. 다음엔 꼭 승리하세요!</p>
+                }
+                @* 관전자 또는 오류 상황 (플레이어 정보 없을 때) *@
+                else
+                {
+                    <h4 class="text-2xl text-blue-400">게임 종료!</h4>
+                    @if (winnerPlayer is not null)
+                    {
+                        <p class="text-slate-300">승자는 @winnerPlayer.Name (@winnerSymbol) 입니다!</p>
+                    }
+                }
+            }
+
+            @* 게임 재시작 버튼 (호스트만 보이도록 - 기존 로직 활용) *@
+            @if (CurrentRoom.Game.PlayerXId == myPlayerId && CurrentRoom.Players.Count == 2)
+            {
+                <button class="client-ok-button mt-4 cursor-pointer" @onclick="StartGame">Restart Game</button>
+            }
+        </div>
+    }
+
+    if ((!CurrentRoom.Game.GameStarted || CurrentRoom.Game.GameOver) @* ? 게임이 시작되었고 현재 게임 플레이어가 접속되었을 때 *@
+    && CurrentRoom.Game.PlayerXId == myPlayerId @* ? The current player is the host *@
+    && CurrentRoom.Players.Count == 2 @* ? 게임 플레이어가 2명이 성원이 되었을 때 *@
+    && !CurrentRoom.Game.GameOver) @* 게임 오버 시에는 위의 Restart 버튼 사용*@
+    {
+        <button class="client-ok-button cursor-pointer" @onclick="StartGame">Start Game</button>
+    }
+
+    if (CurrentRoom.Game.GameStarted && !CurrentRoom.Game.GameOver)
+    {
+
+        <p>현재 착점순서 : @CurrentRoom.Game.CurrentPlayerSymbol (@(CurrentRoom.Game.CurrentPlayerSymbol == "X" ? CurrentRoom.Players.FirstOrDefault(p => p.Name == CurrentRoom.Game.PlayerXId)?.Name : CurrentRoom.Players.FirstOrDefault(p => p.Name == CurrentRoom.Game.PlayerOId)?.Name))</p>
+        <span>플레이어: @CurrentRoom.Players.FirstOrDefault(p => p.Name == CurrentRoom.Game.PlayerXId)?.Name (X), @CurrentRoom.Players.FirstOrDefault(p => p.Name == CurrentRoom.Game.PlayerOId)?.Name (O)</span>
+
+        @* 보드판 *@
+        <table class="tic-tac-toe">
+            @for (int row = 0; row < 3; row++)
+            {
+                <tr>
+                    @for (int col = 0; col < 3; col++)
+                    {
+                        var r = row;
+                        var c = col;
+                        <td @onclick="() => MakeMove(r, c)">
+                            @CurrentRoom.Game.Board[r][c]
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+
+        <div class="flex flex-col h-48 w-full gap-2 items-center justify-center">
+            @if (!IsMyTurn())
+            {
+                <p class="text-slate-400 text-xs"> 상대방 착점을 기다리는 중... </p>
+            }
+        </div>
+
+    }
+}
+
+@code
+{
     private string? myPlayerId;
-    
+    private Player? myPlayer; // 현재 플레이어 정보를 저장할 속성
+
+    @* ? The SignalR 허브 연결 *@
     [CascadingParameter]
     public HubConnection? HubConnection { get; set; }
-    
+
     [Parameter]
     public GameRoom? CurrentRoom { get; set; }
-    
-    // Called when the component is initialized
+
+    @* ? 콤포넌트가 초기화 될 때 호출 *@
     protected override async Task OnInitializedAsync()
     {
-        if(CurrentRoom is null
-           || HubConnection?.ConnectionId is null)
+        if (CurrentRoom is null || HubConnection is null || HubConnection.ConnectionId is null)
         {
             await Task.CompletedTask;
             return;
         }
 
         myPlayerId = HubConnection.ConnectionId;
-        
-        // 플레이어 합류 이벤트 등록
-        HubConnection?.On<Player>("PlayerJoined",
-            player =>
+        // 초기화 시점에 CurrentRoom.Players 에서 내 정보 찾기
+        myPlayer = CurrentRoom.Players.FirstOrDefault(p => p.ConnectionId == myPlayerId);
+
+        @* ? Register for the OnPlayerJoined event *@
+        HubConnection?.On<Player>("PlayerJoined", player =>
+        {
+            CurrentRoom?.Players.Add(player);
+            // 내가 방금 조인한 플레이어인 확인하기. (확실히 하기)
+            if(player.ConnectionId == myPlayerId)
             {
-                // 플레이어 추가
-                CurrentRoom?.Players.Add((player));
-                
-                // UI 갱신
-                StateHasChanged();
-                
-            });
-        
-        // 방 이벤트 등록
+                myPlayer = player;
+            }
+            StateHasChanged();
+        });
+
+        @* ? Register for the OnRoom event *@
         HubConnection?.On<GameRoom>("UpdateGame", serverRoom =>
         {
-            CurrentRoom = serverRoom; // 방 갱신 
-            StateHasChanged(); // UI 업데이트
+            @* ? Update the room *@
+            CurrentRoom = serverRoom;
+
+            @* ? 게임 상태 업데이트 시 내 플레이어 정보도 갱신 *@
+            myPlayer = CurrentRoom.Players.FirstOrDefault(p => p.ConnectionId == myPlayerId);
+            @* ? Update the UI *@
+            StateHasChanged();
         });
     }
-    
-    // 게임 시작
+
+    @* ? 게임 시작 *@
     private async Task StartGame()
     {
         if (HubConnection is null || CurrentRoom is null)
@@ -49,17 +178,33 @@
             await Task.CompletedTask;
             return;
         }
-        
-        // Invoke the StartGame method on the Server
+
+        @* ? 서버의 "StartGame" 메서드 호출, Invoke the StartGame method on the server *@
         await HubConnection.InvokeAsync("StartGame", CurrentRoom.RoomId);
-        
     }
 
+    @* ? 착점 *@
+    private async Task MakeMove(int row, int col)
+    {
+        if (IsMyTurn()
+        && CurrentRoom is not null
+        && CurrentRoom.Game.GameStarted
+        && !CurrentRoom.Game.GameOver
+        && HubConnection is not null)
+        {
+            @* ? 서버의 "MakeMove" 메서드 호출, Invoke the MakeMove method on the server *@
+            await HubConnection.InvokeAsync("MakeMove", CurrentRoom.RoomId, row, col, myPlayerId);
+        }
+    }
 
+    @* ? 현재 착점순서 플레이어 지정, Is it the current player's turn? *@
+    private bool IsMyTurn()
+    {
+        if (CurrentRoom is not null && myPlayerId is not null)
+            return myPlayerId == CurrentRoom.Game.CurrentPlayerID;
+        return false;
+    }
+
+     // (선택적) 이름을 표시하기 위한 계산된 속성 (더 깔끔)
+    private string MyDisplayName => myPlayer?.Name ?? "나"; // 플레이어 정보가 로드되기 전 기본값
 }
-
-
-
-
-
-

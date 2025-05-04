@@ -1,101 +1,136 @@
-namespace TicTacToe.Shared;
+﻿namespace TicTacToe.Shared;
 
 public class TicTacToeGame
 {
-    public string? PlayerOId { get; set; } // O
-    public string? PlayerXId { get; set; } // X
+    public string? PlayerOId { get; set; } // Player O's ID
 
-    public string? CurrentPlayerID { get; private set; }
-    public string CurrentPlayerSymbol 
-        => CurrentPlayerID == PlayerXId ? "X" : "O";
+    public string? PlayerXId { get; set; } // Player X's ID
 
-    public bool GameStarted { get; private set; }
-    public bool GameOver { get; private set; }
-    public bool IsDraw { get; private set; }
-    public string Winner { get; private set; } = string.Empty;
-    public List<List<string>> Board { get; private set; } = new(3);
+    public string? CurrentPlayerID { get; set; } // Current player's ID
+
+    // 현재 플레이어의 심볼
+    public string CurrentPlayerSymbol => CurrentPlayerID == PlayerXId ? "X" : "O";
+
+    // 게임이 시작되었는지 여부
+    public bool GameStarted { get; set; } = false;
+
+    // 게임이 끝났는지 여부
+    public bool GameOver { get; set; } = false;
+
+    // 무승부 여부
+    public bool IsDraw { get; set; } = false;
+
+    // 승자
+    public string Winner { get; set; } = string.Empty;
+
+    // 게임 보드
+    public List<List<string>> Board { get; set; } = new List<List<string>>(3);
 
     public TicTacToeGame()
     {
         InitializeBoard();
     }
 
-    private void InitializeBoard()
+    // 게임 보드 초기화
+    public void InitializeBoard()
     {
+        Board.Clear();
+        Console.WriteLine("보드 초기화 시작");
         Board =
         [
-            new List<string> { "", "", "" },
-            new List<string> { "", "", "" },
-            new List<string> { "", "", "" }
-        ];
+            ["", "", ""],
+            ["", "", ""],
+            ["", "", ""]
+        ]; // 보드 초기화
     }
 
+    // 게임 시작
     public void StartGame()
     {
         CurrentPlayerID = PlayerXId;
+
         GameStarted = true;
         GameOver = false;
-        IsDraw = false;
         Winner = string.Empty;
+        IsDraw = false;
+
         InitializeBoard();
     }
 
-    private void TogglePlayer()
+    // 플레이어를 토글하는 메서드
+    public void TogglePlayer()
     {
         CurrentPlayerID = CurrentPlayerID == PlayerXId ? PlayerOId : PlayerXId;
     }
 
+    // 움직임을 만들어내는 메서드
     public bool MakeMove(int row, int col, string playerId)
     {
-        if (!GameStarted || GameOver || playerId != CurrentPlayerID ||
-            row < 0 || row >= 3 || col < 0 || col >= 3 || Board[row][col] != "")
+        if (playerId != CurrentPlayerID
+        || row < 0 || row >= 3
+        || col < 0 || col >= 3
+        || Board[row][col] != string.Empty)
         {
             return false;
         }
 
         Board[row][col] = CurrentPlayerSymbol;
-
-        if (CheckWinner()) return true;
-        if (CheckDraw()) return true;
-
         TogglePlayer();
         return true;
     }
 
-    private static bool IsLine(string a, string b, string c)
-        => !string.IsNullOrEmpty(a) && a == b && b == c;
-
-    private bool CheckWinner()
+    /// <summary>
+    /// Check if there is a winner or a draw
+    /// </summary>
+    /// <returns></returns>
+    public string CheckWinner()
     {
-        // 가로 및 세로 체크
-        for (var i = 0; i < 3; i++)
+        // Check rows
+        // 가로로 체크
+        for (int i = 0; i < 3; i++)
         {
-            if (!IsLine(Board[i][0], Board[i][1], Board[i][2]) &&
-                !IsLine(Board[0][i], Board[1][i], Board[2][i])) continue;
-            DeclareWinner(Board[i][0]);
-            return true;
+            if (Board[i][0] == Board[i][1] && Board[i][1] == Board[i][2] && !string.IsNullOrEmpty(Board[i][0]))
+            {
+                GameOver = true;
+                Winner = Board[i][0];
+                return Winner;
+            }
         }
 
-        // 대각선 체크
-        if (!IsLine(Board[0][0], Board[1][1], Board[2][2]) &&
-            !IsLine(Board[0][2], Board[1][1], Board[2][0])) return false;
-        DeclareWinner(Board[1][1]);
-        return true;
+        // 세로로 체크
+        for (int i = 0; i < 3; i++)
+        {
+            if (Board[0][i] == Board[1][i] && Board[1][i] == Board[2][i] && !string.IsNullOrEmpty(Board[0][i]))
+            {
+                GameOver = true;
+                Winner = Board[0][i];
+                return Winner;
+            }
+        }
 
+        // 좌상에서 우하로 대각선 체크
+        if (Board[0][0] == Board[1][1] && Board[1][1] == Board[2][2] && !string.IsNullOrEmpty(Board[0][0]))
+        {
+            GameOver = true;
+            Winner = Board[0][0];
+            return Winner;
+        }
+
+        // 우상에서 좌상으로 대각선 체크
+        if (Board[0][2] == Board[1][1] && Board[1][1] == Board[2][0] && Board[0][2] != string.Empty)
+        {
+            GameOver = true;
+            Winner = Board[0][2];
+            return Winner;
+        }
+
+        return Winner;
     }
 
-    private void DeclareWinner(string winnerSymbol)
+    // 승자가 없고, 모든 칸이 채워져 있으면 무승승
+    public bool CheckDraw()
     {
-        GameOver = true;
-        Winner = winnerSymbol;
+        return IsDraw = Board.All(row => row.All(cell => cell != string.Empty));
     }
 
-    private bool CheckDraw()
-    {
-        if (!Board.All(row => row.All(cell => cell != ""))) return false;
-        GameOver = true;
-        IsDraw = true;
-        return true;
-
-    }
 }

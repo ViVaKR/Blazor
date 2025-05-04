@@ -1,8 +1,8 @@
-namespace TicTacToe.Shared;
+﻿namespace TicTacToe.Shared;
 
-public class Player(string connectioiId, string name)
+public class Player(string connectionId, string name)
 {
-    public string ConnectionId { get; set; } = connectioiId;
+    public string ConnectionId { get; set; } = connectionId;
 
     public string Name { get; set; } = name;
 }

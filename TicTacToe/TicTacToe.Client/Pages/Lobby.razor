@@ -1,35 +1,43 @@
-@page "/"
+﻿@page "/tictactoe"
 @inject NavigationManager NavigationManager
 @rendermode @(new InteractiveWebAssemblyRenderMode(false))
-<h3 class="!text-slate-400 font-bold  text-3xl">
-    Welcome to Tic Tac Toe! Game
+
+<h3 class="client-title text-center">
+    Welcome to Tic Tac Toe!
 </h3>
 
 @if (currentRoom is null)
 {
-    <input type="text" class="border-1 px-4 py-2 rounded-xl" 
-           @bind="playerName" placeholder="플레이어 이름"
-           />
-    
-    <input
-        type="text"
-        class="border-1 px-4 py-2 rounded-xl"
-        @bind="playerName" placeholder="방 이름"
-    />
-    
-    <button @onclick="CreateRoom" class="px-4 py-2 rounded-xl bg-sky-400 hover:bg-red-400">방 만들기</button>
-    
-    <h3 class="client-title">Rooms: </h3>
+    <input type="text"
+           class="client-input"
+           @bind="playerName"
+           placeholder="Your Name" />
+
+    <input type="text"
+           class="client-input"
+           @bind="currentRoomName"
+           placeholder="Room Name" />
+
+    <button
+            @onclick="CreateRoom"
+            class="client-ok-button">
+        방만들기
+    </button>
+
+    <h3 class="client-title">방목록</h3>
+
     <ul>
         @foreach (var room in rooms)
         {
             <li class="client-li">
                 <span class="client-span-name">@room.RoomName</span>
                 <button @onclick="() => JoinRoom(room.RoomId)"
-                        class="client-ok-button">방입장</button>
+                        class="client-ok-button">
+                    Join
+                </button>
             </li>
         }
-    </ul> 
+    </ul>
 }
 else
 {
@@ -38,52 +46,50 @@ else
     </CascadingValue>
 }
 
-@code {
+@code
+{
     private HubConnection? hubConnection; // The SignalR hub connection
-    private string playerName = string.Empty; // 플레이어 이름
-    private string currentRoomName = string.Empty; // 방이름 
-    private GameRoom? currentRoom; // 현재 방의 플레이어 
-    private List<GameRoom> rooms = []; // 방목록
-
+    private string playerName = string.Empty; // The player's name
+    private string currentRoomName = string.Empty; // The name of the room the player is currently in (if any)
+    private GameRoom? currentRoom; // The room the player is currently in (if any)
+    private List<GameRoom> rooms = []; // The list of rooms
 
     protected override async Task OnInitializedAsync()
     {
         // Create a new hub connection
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/gamehub"))
-            .Build();
-        
+        hubConnection = new HubConnectionBuilder().WithUrl(NavigationManager.ToAbsoluteUri("/gamehub")).Build();
+
         // Register for the OnRooms event
-        hubConnection.On<List<GameRoom>>("Rooms", roomList =>
+        hubConnection.On<List<GameRoom>>("Rooms", x =>
         {
-            rooms = roomList;
+            Console.WriteLine($"We got rooms! Count = {x.Count()}");
+            rooms = x;
             StateHasChanged();
         });
-        
-        
+
         // Start the connection
         await hubConnection.StartAsync();
     }
 
-    // 방만들기
+    // Create a new room
     private async Task CreateRoom()
     {
+        // Check if the hub connection is initialized
         if (hubConnection is null) return;
 
-        currentRoom = await hubConnection
-            .InvokeAsync<GameRoom>("CreateRoom",
-            currentRoomName, 
-            playerName);
+        // Invoke the CreateRoom method on the server
+        currentRoom = await hubConnection.InvokeAsync<GameRoom>("CreateRoom", currentRoomName, playerName);
     }
 
+    // Join an existing room
     private async Task JoinRoom(string roomId)
     {
-        if (hubConnection is null) return;
+        // Check if the hub connection is initialized
+        if (hubConnection is null)
+            return;
 
-        var joinedRoom = await hubConnection
-            .InvokeAsync<GameRoom>("JoinRoom", 
-                roomId, 
-                playerName);
+        // Invoke the JoinRoom method on the server
+        var joinedRoom = await hubConnection.InvokeAsync<GameRoom>("JoinRoom", roomId, playerName);
 
         currentRoom = joinedRoom;
         currentRoomName = joinedRoom.RoomName;
