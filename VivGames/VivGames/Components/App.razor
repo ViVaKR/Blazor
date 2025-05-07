@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <base href="/"/>
+    <ImportMap/>
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <HeadOutlet @rendermode="PageRenderMode"/>
+    <link rel="stylesheet" href="css/app.css"/>
+
+    <title>Viv Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body>
+<Routes @rendermode="PageRenderMode"/>
+<script src="_framework/blazor.web.js"></script>
+</body>
+
+</html>
+
+@code {
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+
+    private IComponentRenderMode? PageRenderMode =>
+        HttpContext != null
+        && HttpContext.AcceptsInteractiveRouting()
+            ? InteractiveWebAssembly
+            : null;
+
+}
