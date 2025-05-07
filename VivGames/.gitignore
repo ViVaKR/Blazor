@@ -413,7 +413,7 @@ FodyWeavers.xsd
 ##
 
 appsettings.json
-appsetttings*
+appsettings*
 
 # globs
 Makefile.in
