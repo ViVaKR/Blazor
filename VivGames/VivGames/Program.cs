@@ -9,12 +9,14 @@ using VivGames.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-const string coresapp = "corsapp";
+const string corsapp = "corsapp";
 builder.Services.AddSignalR();
 builder.WebHost.UseUrls("https://localhost:38270");
 
-builder.Services.AddCors(options => options.AddPolicy(coresapp,
-    policy => policy.WithOrigins(Helper.AllowOrigins()).AllowAnyMethod().AllowAnyMethod()));
+builder.Services.AddCors(options => options.AddPolicy(corsapp,
+    policy => policy.WithOrigins(Helper.AllowOrigins())
+        .AllowAnyMethod()
+        .AllowAnyHeader()));
 
 builder.Services.AddControllers();
 
@@ -40,7 +42,8 @@ builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentityCore<ApplicationUser>(options =>
+        options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
@@ -51,7 +54,6 @@ builder.Services.AddFluentUIComponents();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
@@ -67,13 +69,14 @@ else
     app.UseHsts();
 }
 
-app.UseCors(coresapp);
+app.UseCors(corsapp);
 
 app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 
 app.MapStaticAssets();
+
 app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(VivGames.Client._Imports).Assembly);

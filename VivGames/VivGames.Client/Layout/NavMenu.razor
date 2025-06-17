@@ -3,58 +3,42 @@
 @inject NavigationManager NavigationManager
 
 <h3 class="text-nowrap whitespace-nowrap text-2xl p-4 text-center bg-sky-800 text-white">
-    @(title)
+    <NavLink href="">@(title)</NavLink>
 </h3>
-
 
 <div class="bg-gradient-to-b from-sky-800 to-sky-200 via-sky-800
             text-xl w-full px-4 py-12 min-h-screen">
 
     <nav class="flex flex-col gap-4">
 
-        <NavLink class="text-slate-50
-                        px-8 py-2 border-none
-                        hover:bg-red-400
-                        rounded-full" href="">
-            Home
-        </NavLink>
-
         @foreach (var menu in menus)
         {
-            <NavLink class="text-slate-50 px-4 py-2
-                        hover:border-b-2 hover:border-b-rose-500
-                        h-12
-                        hover:text-rose-400 whitespace-nowrap text-nowrap
-                          rounded-xl"
-
+            <NavLink class="text-slate-400 pl-8 py-2 h-auto
+                            hover:text-white
+                              whitespace-nowrap text-nowrap
+                              rounded-lg"
                      href="@menu.Value.Href"
-                     ActiveClass="bg-rose-500"
+                     ActiveClass="bg-red-400 text-white"
                      @key="menu.Key">
                 @menu.Value.Name
             </NavLink>
         }
 
-        <NavLink class=" nav-link"
-                 href="auth">
-            Auth Required
-        </NavLink>
+        <NavLink class=" nav-link" href="auth">Auth Required</NavLink>
 
         <AuthorizeView>
             <Authorized>
 
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Manage">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span>
-                        @context.User.Identity?.Name
-                    </NavLink>
-                </div>
+                <NavLink class="text-slate-400" href="Account/Manage">
+                    @context.User.Identity?.Name
+                </NavLink>
 
                 <div class="nav-item px-3">
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken/>
                         <input type="hidden" name="ReturnUrl" value="@currentUrl"/>
-                        <button type="submit" class="nav-link">
-                            <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                        <button type="submit" class="text-slate-400">
+                            Logout
                         </button>
                     </form>
                 </div>
@@ -62,17 +46,15 @@
             </Authorized>
 
             <NotAuthorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Register">
-                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Login">
-                        <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
-                    </NavLink>
-                </div>
+                <NavLink class="text-slate-400" href="Account/Register">
+                    Register
+                </NavLink>
+
+                <NavLink class="text-slate-400" href="Account/Login">
+                    Login
+                </NavLink>
             </NotAuthorized>
+
         </AuthorizeView>
     </nav>
 </div>
@@ -84,10 +66,10 @@
 
     private readonly Dictionary<int, (string Name, string Href)> menus = new()
     {
-        { 0, new ValueTuple<string, string>("Demo", "Demo") },
-        { 1, new ValueTuple<string, string>("메뉴 1", "Menua") },
-        { 2, new ValueTuple<string, string>("메뉴 2", "Menub") },
-        { 3, new ValueTuple<string, string>("메뉴 3", "Menuc") },
+        { 0, new ValueTuple<string, string>("Demo", "demo") },
+        { 1, new ValueTuple<string, string>("Chat", "chat") },
+        { 2, new ValueTuple<string, string>("블루마블", "blue-marble") },
+        { 3, new ValueTuple<string, string>("블러그", "blog") },
     };
 
     protected override void OnInitialized()

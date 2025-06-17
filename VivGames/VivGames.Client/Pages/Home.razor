@@ -1,7 +1,32 @@
 ﻿@page "/"
+@inject ILogger<Home> Logger;
 
 <PageTitle>Home</PageTitle>
 <div>Home</div>
 
-@{
+<p>@message</p>
+
+<button @onclick="HandleClick">
+  Log information (and trigger a render)
+</button>
+
+@code {
+
+  private string? message;
+
+  protected override Task OnInitializedAsync()
+  {
+    message = $"Initialized at {DateTime.Now}";
+
+    return base.OnInitializedAsync();
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    Logger.LogInformation("firstRender = {FirstRender}", firstRender);
+    await base.OnAfterRenderAsync(firstRender);
+  }
+
+  private void HandleClick() => Logger.LogInformation("HandleClick called");
+
 }
