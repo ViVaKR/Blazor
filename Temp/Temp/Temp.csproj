@@ -20,4 +20,37 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.8" />
   </ItemGroup>
 
+  <!-- bootstrap -->
+  <Target Name="CopyBootstrapAssets" BeforeTargets="Build">
+    <Message Text="Copying Bootstrap assets from solution root..." Importance="high" />
+
+    <!-- Bootstrap CSS 파일 복사 (가장 추천하는 경로) -->
+    <Copy SourceFiles="../node_modules/bootstrap/dist/css/bootstrap.min.css" DestinationFolder="wwwroot/lib/bootstrap/css" />
+    <Copy SourceFiles="../node_modules/bootstrap/dist/css/bootstrap.min.css.map" DestinationFolder="wwwroot/lib/bootstrap/css" />
+
+    <!-- Bootstrap JS 파일 복사 (가장 추천하는 경로) -->
+    <Copy SourceFiles="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" DestinationFolder="wwwroot/lib/bootstrap/js" />
+    <Copy SourceFiles="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js.map" DestinationFolder="wwwroot/lib/bootstrap/js" />
+  </Target>
+
+  <PropertyGroup>
+    <MyCustomProperty>Hello, World!</MyCustomProperty>
+    <VivMessage>Fine Thanks And You?</VivMessage>
+  </PropertyGroup>
+  <ItemGroup>
+    <MyCustomItem Include="Apple" />
+    <MyCustomItem Include="Banana" />
+    <MyCustomItem Include="Cherry" />
+  </ItemGroup>
+
+  <Target Name="PrintVariables" AfterTargets="Build">
+    <Message Text="===== Printing build variables: =====" Importance="high" />
+    <Message Text="MyCustomProperty: $(MyCustomProperty)" Importance="high" />
+    <Message Text="MyCustomProperty: $(VivMessage)" Importance="high" />
+    <Message Text="TargetDir: $(TargetDir)" Importance="high" />
+    <Message Text="--- Items in MyCustomItem ---" Importance="high" />
+    <Message Text="%(MyCustomItem.Identity)" Importance="high" />
+    <Message Text="=================================" Importance="high" />
+  </Target>
+
 </Project>
